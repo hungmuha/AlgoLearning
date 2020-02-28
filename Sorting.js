@@ -69,3 +69,64 @@ function InsertionSortColt(arr) {
     }
     return arr;
 }
+
+function mergeTwoArrays(arr1,arr2) {
+	let result = [];
+	let i = 0;
+	let j = 0;
+	while(i < arr1.length && j < arr2.length) {
+		if(arr1[i] < arr2[j]){
+			result.push(arr1[i]);
+			i++;
+		} else {
+			result.push(arr2[j]);
+			j++;
+		}
+	}
+	while(i < arr1.length) {
+		result.push(arr1[i]);
+		i++;
+	}
+	while(j < arr2.length) {
+		result.push(arr2[j]);
+		j++;
+	}
+
+	return result;
+}
+function mergeSortAlgo(arr) {
+	if(arr.length <= 1) return arr;
+	let midPoint = Math.floor(arr.length/2);
+	let left = mergeSortAlgo(arr.slice(0,midPoint));
+	let right = mergeSortAlgo(arr.slice(midPoint));
+	return mergeTwoArrays(left,right);
+}
+
+
+function pivotHelper(arr, start = 0, end = arr.length-1) {
+	const swap = (array, idx1, idx2) => {
+		[array[idx1],array[idx2]] = [array[idx2],array[idx1]];
+	};
+	let pivot  = arr[start];
+	let currentPivotIndex = start;
+	for(let i = start+1 ; i <= end; i++) {
+		if(arr[i] < pivot) {
+			currentPivotIndex++;
+			swap(arr,currentPivotIndex,i);
+		}
+	}
+	swap(arr,start,currentPivotIndex);
+	return currentPivotIndex;
+}
+
+function quickSort(arr, left = 0, right = arr.length-1) {
+	if(left < right){
+		let pivotIndex = pivotHelper(arr, left, right);
+		//left
+		quickSort(arr,left,pivotIndex-1);
+		//right
+		quickSort(arr,pivotIndex+1,right);
+	}
+	return arr;
+}
+console.log(quickSort([101,1,2,3,-10,7,8]));
