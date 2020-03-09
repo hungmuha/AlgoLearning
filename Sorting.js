@@ -69,7 +69,7 @@ function InsertionSortColt(arr) {
     }
     return arr;
 }
-
+//merge sort
 function mergeTwoArrays(arr1,arr2) {
 	let result = [];
 	let i = 0;
@@ -102,7 +102,7 @@ function mergeSortAlgo(arr) {
 	return mergeTwoArrays(left,right);
 }
 
-
+//quick sort
 function pivotHelper(arr, start = 0, end = arr.length-1) {
 	const swap = (array, idx1, idx2) => {
 		[array[idx1],array[idx2]] = [array[idx2],array[idx1]];
@@ -129,4 +129,33 @@ function quickSort(arr, left = 0, right = arr.length-1) {
 	}
 	return arr;
 }
-console.log(quickSort([101,1,2,3,-10,7,8]));
+
+//radix sort
+function getDigit(num,place) {
+    return Math.floor(Math.abs(num)/Math.pow(10,place))%10;
+}
+
+function digitCount(num) {
+    if(num===0) return 1;
+    return Math.floor(Math.log10(Math.abs(num))) + 1;
+}
+function mostDigit(arr) {
+    let maxDigits =0;
+    for(let i = 0; i< arr.length; i++) {
+        maxDigits = Math.max(digitCount(arr[i]),maxDigits);
+    }
+    return maxDigits;
+}
+
+function radixSort(nums) {
+    let maxDigits = mostDigit(nums);
+    for(let k = 0; k < maxDigits; k++) {
+        let digitBuckets = Array.from({length:10},()=>[]);
+        for(let i=0; i<nums.length;i++) {
+            let digit = getDigit(nums[i],k);
+            digitBuckets[digit].push(nums[i]);
+        }
+        nums = [].concat(...digitBuckets);
+    }
+    return nums;
+}
