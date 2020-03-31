@@ -47,6 +47,23 @@ function fib(num){
   return fib(num-1) + fib(num-2);
 }
 
+// fibo number recursion with memoization Dynamic programming
+function fibMemo(num,memo=[]){
+    if(memo[num]!=undefined) return memo[num];
+  if(num<=2) return 1;
+  var res = fib(num-1, memo) + fib(num-2,memo);
+  memo[num] = res;
+  return res;
+}
+
+function fibTable(num) {
+    if(n<=2) return 1;
+    var fibNums= [0,1,1];
+    for(var i=3;i<=n;i++) {
+        fibNums[i] = fibNums[i-1] +fibNums[i-2];
+    }
+    return fibNums[n];
+
 //flatten array and nested array
 function flatten(arr){
   // add whatever parameters you deem necessary - good luck!
